@@ -9,6 +9,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.scene.media.AudioClip;
 
 import java.util.Objects;
 
@@ -130,14 +131,24 @@ public class PhonebookView extends Application implements TableViewerInterface{
         TableView.TableViewSelectionModel<Profile> selectionModel= bookData.getSelectionModel();
         selectionModel.setSelectionMode(SelectionMode.SINGLE);
 
+        // adding sound effects
+        AudioClip addSound = new AudioClip((getClass().getResource("Sounds/eatingSound.mp3")).toExternalForm());
+        AudioClip deleteSound = new AudioClip((getClass().getResource("Sounds/drinkingSound.mp3")).toExternalForm());
 
         //////* ADDING ACTION EVENTS *//////
 
         // adding action events to the add button
-        add.setOnAction((actionEvent -> controller.entryAdded(inName.getText(), inPhone.getText(), inpEmail.getText(), insEmail.getText())));
+        add.setOnAction((actionEvent -> {
+            controller.entryAdded(inName.getText(), inPhone.getText(), inpEmail.getText(), insEmail.getText());
+            addSound.play(1.0);
+        }));
 
         // adding action events to the delete button
-        delete.setOnAction((actionEvent -> controller.entryDeleted()));
+        // adding action events to the delete button
+        delete.setOnAction((actionEvent -> {
+            controller.entryDeleted();
+            deleteSound.play(1.0);
+        }));
 
         // adding action events to the quit button
         quit.setOnAction((actionEvent -> controller.quit()));
