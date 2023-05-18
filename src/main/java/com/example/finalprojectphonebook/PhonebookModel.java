@@ -42,6 +42,7 @@ public class PhonebookModel implements StorageModelInterface{
     // updates persistent storage (idk how to do this btw)
     @Override
     public void updateStorage() {
-
+        //in = new FileInputStream("input.txt");
+        //out = new FileOutputStream("output.txt");
     }
 }

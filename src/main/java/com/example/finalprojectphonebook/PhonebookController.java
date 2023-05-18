@@ -37,9 +37,6 @@ public class PhonebookController implements TableControllerInterface{
     // called whenever user edits entry
     @Override
     public void entryEdited(String input, String newValue) {
-        //Profile profile = event.getRowValue();
-        //profile.setName(event.getNewValue());
-        // alters entry in view and model
         model.editModelEntry(input, newValue, (view.editViewEntry()));
     }
 

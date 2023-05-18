@@ -64,20 +64,6 @@ public class PhonebookView extends Application implements TableViewerInterface{
         rootScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("PhoneStyle.css")).toExternalForm());
         root.getStyleClass().add("root");
 
-        nameClm.getStyleClass().add("column-title");
-        phoneClm.getStyleClass().add("column-title");
-        emailClm.getStyleClass().add("column-title");
-        bookData.getStyleClass().add("table-view");
-        add.getStyleClass().add("button");
-        delete.getStyleClass().add("button");
-        quit.getStyleClass().add("button");
-        inputValid.getStyleClass().add("input-label");
-        inName.getStyleClass().add("text-field");
-        inPhone.getStyleClass().add("text-field");
-        inEmail.getStyleClass().add("text-field");
-
-
-
         // sets controller and model
         PhonebookModel model = new PhonebookModel();
         PhonebookController controller = new PhonebookController(this, model);
@@ -120,10 +106,10 @@ public class PhonebookView extends Application implements TableViewerInterface{
 
         //adds columns to bookData table
         bookData.getColumns().addAll(nameClm, phoneClm, emailClm);
-        bookData.setMaxSize(500,500);
-        nameClm.setPrefWidth(166.66);
-        phoneClm.setPrefWidth(166.66);
-        emailClm.setPrefWidth(166.66);
+        bookData.setMaxSize(900,900);
+        nameClm.setPrefWidth(300);
+        phoneClm.setPrefWidth(300);
+        emailClm.setPrefWidth(300);
 
         //sets selection model and mode
         TableView.TableViewSelectionModel<Profile> selectionModel= bookData.getSelectionModel();
@@ -161,6 +147,19 @@ public class PhonebookView extends Application implements TableViewerInterface{
             String newValue = event.getNewValue();
             controller.entryEdited("email", newValue);
         });
+
+        // adding style elements!!
+        nameClm.getStyleClass().add("column-title");
+        phoneClm.getStyleClass().add("column-title");
+        emailClm.getStyleClass().add("column-title");
+        bookData.getStyleClass().add("table-view");
+        add.getStyleClass().add("button");
+        delete.getStyleClass().add("button");
+        quit.getStyleClass().add("button");
+        inputValid.getStyleClass().add("input-label");
+        inName.getStyleClass().add("text-field");
+        inPhone.getStyleClass().add("text-field");
+        inEmail.getStyleClass().add("text-field");
     }
 
 
