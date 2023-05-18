@@ -10,6 +10,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 public class PhonebookView extends Application implements TableViewerInterface{
 
     // makes controller a variable
@@ -57,7 +59,24 @@ public class PhonebookView extends Application implements TableViewerInterface{
         root.getChildren().addAll(bookData, entryPane, buttonPane, inputValid);
         root.setSpacing(10);
         root.setAlignment(Pos.CENTER);
-        Scene rootScene = new Scene(root, 1000, 1000);
+        Scene rootScene = new Scene(root, 1000, 650);
+
+        rootScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("PhoneStyle.css")).toExternalForm());
+        root.getStyleClass().add("root");
+
+        nameClm.getStyleClass().add("column-title");
+        phoneClm.getStyleClass().add("column-title");
+        emailClm.getStyleClass().add("column-title");
+        bookData.getStyleClass().add("table-view");
+        add.getStyleClass().add("button");
+        delete.getStyleClass().add("button");
+        quit.getStyleClass().add("button");
+        inputValid.getStyleClass().add("input-label");
+        inName.getStyleClass().add("text-field");
+        inPhone.getStyleClass().add("text-field");
+        inEmail.getStyleClass().add("text-field");
+
+
 
         // sets controller and model
         PhonebookModel model = new PhonebookModel();
