@@ -20,7 +20,8 @@ public class PhonebookView extends Application implements TableViewerInterface{
     //Sets TextFields for user to input data
     TextField inName = new TextField(),
             inPhone = new TextField(),
-            inEmail = new TextField();
+            inpEmail = new TextField(),
+            insEmail = new TextField();
     Label inputValid = new Label();
 
     //creation of table
@@ -30,6 +31,9 @@ public class PhonebookView extends Application implements TableViewerInterface{
     TableColumn<Profile, String> nameClm = new TableColumn<>("Name");
     TableColumn<Profile, String> phoneClm = new TableColumn<>("Phone Number");
     TableColumn<Profile, String> emailClm = new TableColumn<>("Email");
+
+    TableColumn<Profile, String> primClm = new TableColumn<>("Primary");
+    TableColumn<Profile, String> secClm = new TableColumn<>("Secondary");
 
     //Button creation
     Button add = new Button("Add");
@@ -54,7 +58,7 @@ public class PhonebookView extends Application implements TableViewerInterface{
         buttonPane.getChildren().addAll(add, delete, quit);
         buttonPane.setAlignment(Pos.CENTER);
         buttonPane.setSpacing(20);
-        entryPane.getChildren().addAll(inName, inPhone, inEmail);
+        entryPane.getChildren().addAll(inName, inPhone, inpEmail, insEmail);
         entryPane.setAlignment(Pos.CENTER);
         root.getChildren().addAll(bookData, entryPane, buttonPane, inputValid);
         root.setSpacing(10);
@@ -86,7 +90,8 @@ public class PhonebookView extends Application implements TableViewerInterface{
         // setting prompt text for columns
         inName.setPromptText("Name");
         inPhone.setPromptText("Phone Number");
-        inEmail.setPromptText("Email");
+        inpEmail.setPromptText("Primary Email");
+        insEmail.setPromptText("Secondary Email");
 
         // set table data
         bookData.setPlaceholder(new Label("No Contacts :("));
@@ -100,13 +105,23 @@ public class PhonebookView extends Application implements TableViewerInterface{
         phoneClm.setCellValueFactory(new PropertyValueFactory<>("phone"));
         phoneClm.setCellFactory(TextFieldTableCell.forTableColumn());
 
+        primClm.setCellValueFactory(new PropertyValueFactory<>("primary"));
+        secClm.setCellValueFactory(new PropertyValueFactory<>("secondary"));
+
         // creates editable email column
-        emailClm.setCellValueFactory(new PropertyValueFactory<>("email"));
-        emailClm.setCellFactory(TextFieldTableCell.forTableColumn());
+        //emailClm.setCellValueFactory(new PropertyValueFactory<>("email"));
+        emailClm.getColumns().addAll(primClm, secClm);
+        primClm.setCellFactory(TextFieldTableCell.forTableColumn());
+        secClm.setCellFactory(TextFieldTableCell.forTableColumn());
+        //emailClm.setCellFactory(TextFieldTableCell.forTableColumn());
+
+
 
         //adds columns to bookData table
         bookData.getColumns().addAll(nameClm, phoneClm, emailClm);
         bookData.setMaxSize(900,900);
+        primClm.setPrefWidth(150);
+        secClm.setPrefWidth(150);
         nameClm.setPrefWidth(300);
         phoneClm.setPrefWidth(300);
         emailClm.setPrefWidth(300);
@@ -119,19 +134,13 @@ public class PhonebookView extends Application implements TableViewerInterface{
         //////* ADDING ACTION EVENTS *//////
 
         // adding action events to the add button
-        add.setOnAction((actionEvent -> {
-            controller.entryAdded(inName.getText(), inPhone.getText(), inEmail.getText());
-        }));
+        add.setOnAction((actionEvent -> controller.entryAdded(inName.getText(), inPhone.getText(), inpEmail.getText(), insEmail.getText())));
 
         // adding action events to the delete button
-        delete.setOnAction((actionEvent -> {
-            controller.entryDeleted();
-        }));
+        delete.setOnAction((actionEvent -> controller.entryDeleted()));
 
         // adding action events to the quit button
-        quit.setOnAction((actionEvent -> {
-            controller.quit();
-        }));
+        quit.setOnAction((actionEvent -> controller.quit()));
 
         nameClm.setOnEditCommit(event -> {
             String newValue = event.getNewValue();
@@ -142,16 +151,29 @@ public class PhonebookView extends Application implements TableViewerInterface{
             String newValue = event.getNewValue();
             controller.entryEdited("phone", newValue);
         });
-
+        /*
         emailClm.setOnEditCommit(event -> {
             String newValue = event.getNewValue();
             controller.entryEdited("email", newValue);
+        });
+        */
+
+        primClm.setOnEditCommit(event ->{
+            String newValue = event.getNewValue();
+            controller.entryEdited("primary", newValue);
+        });
+
+        secClm.setOnEditCommit(event ->{
+            String newValue = event.getNewValue();
+            controller.entryEdited("secondary", newValue);
         });
 
         // adding style elements!!
         nameClm.getStyleClass().add("column-title");
         phoneClm.getStyleClass().add("column-title");
         emailClm.getStyleClass().add("column-title");
+        primClm.getStyleClass().add("embedded-column");
+        secClm.getStyleClass().add("embedded-column");
         bookData.getStyleClass().add("table-view");
         add.getStyleClass().add("button");
         delete.getStyleClass().add("button");
@@ -159,7 +181,8 @@ public class PhonebookView extends Application implements TableViewerInterface{
         inputValid.getStyleClass().add("input-label");
         inName.getStyleClass().add("text-field");
         inPhone.getStyleClass().add("text-field");
-        inEmail.getStyleClass().add("text-field");
+        inpEmail.getStyleClass().add("text-field");
+        insEmail.getStyleClass().add("text-field");
     }
 
 
@@ -173,7 +196,8 @@ public class PhonebookView extends Application implements TableViewerInterface{
     public void clearEntries(){
         inName.clear();
         inPhone.clear();
-        inEmail.clear();
+        inpEmail.clear();
+        insEmail.clear();
         inName.requestFocus();
     }
 
@@ -197,8 +221,7 @@ public class PhonebookView extends Application implements TableViewerInterface{
 
     @Override
     public int editViewEntry(){
-        int row = bookData.getSelectionModel().getSelectedIndex();
-        return row;
+        return bookData.getSelectionModel().getSelectedIndex();
     }
 
 

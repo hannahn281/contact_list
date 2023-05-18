@@ -10,6 +10,10 @@
     -fx-background-color: black;
 }
 
+.embedded-column{
+    -fx-font-family: "Monocraft";
+    -fx-font-size: 12;
+}
 
 .column-title{
     -fx-font-family: "Monocraft";

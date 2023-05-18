@@ -2,7 +2,7 @@ package com.example.finalprojectphonebook;
 
 public interface StorageModelInterface {
     // adds entry
-    Profile addModelEntry(String entry1, String entry2, String entry3);
+    Profile addModelEntry(String entry1, String entry2, String entry3, String entry4);
     // deletes entry
     void deleteModelEntry(int index);
 

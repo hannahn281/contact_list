@@ -3,7 +3,7 @@ package com.example.finalprojectphonebook;
 public interface TableControllerInterface {
 
     // when a string is entered, sends to model
-    void entryAdded(String entry1, String entry2, String entry3);
+    void entryAdded(String entry1, String entry2, String entry3, String entry4);
 
     // when a string is entered, sends to model
     void entryDeleted();

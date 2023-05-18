@@ -15,14 +15,14 @@ public class PhonebookController implements TableControllerInterface{
 
     @Override
     // called whenever user clicks add entry
-    public void entryAdded(String name, String phone, String email) {
+    public void entryAdded(String name, String phone, String pEmail, String sEmail) {
         // checks if view's fields are filled. if not, then its invalid
-        if(name.isBlank() || phone.isBlank()  || email.isBlank() ){
+        if(name.isBlank() || phone.isBlank()  || pEmail.isBlank()){
             view.setInputValid("All fields must not be blank to add entry");
         }
         // adds entry to view and model
         else {
-            view.addViewEntry(model.addModelEntry(name, phone, email));
+            view.addViewEntry(model.addModelEntry(name, phone, pEmail, sEmail));
             view.clearEntries();
         }
     }
