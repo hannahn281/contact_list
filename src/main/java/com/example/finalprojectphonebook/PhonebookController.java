@@ -9,10 +9,11 @@ public class PhonebookController implements TableControllerInterface{
     private StorageModelInterface model;
 
     // constructor to use the Phonebook Controller
-    public PhonebookController(TableViewerInterface view, StorageModelInterface model){
+    public PhonebookController(TableViewerInterface view, StorageModelInterface model) throws IOException {
         this.view = view;
         this.model = model;
         view.setController(this);
+        model.loadStorage();
     }
 
     @Override

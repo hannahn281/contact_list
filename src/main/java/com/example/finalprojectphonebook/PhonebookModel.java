@@ -1,11 +1,9 @@
 package com.example.finalprojectphonebook;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -71,5 +69,37 @@ public class PhonebookModel implements StorageModelInterface{
         }
         System.out.println("Contents of: "+ file.getAbsolutePath());
         System.out.println(Files.readString(file.toPath()));
+    }
+
+    public void loadStorage() throws IOException{
+        // finds up directory and file
+        File dir = new File("src/main/resources/com/example/finalprojectphonebook");
+        File file = new File(dir, "ProfileData.txt");
+        System.out.println("Contents of woohoo: "+ file.getAbsolutePath());
+        System.out.println(Files.readString(file.toPath()));
+
+        file.setReadable(true); //read
+        file.setExecutable(true); //execute
+
+        try {
+            Reader reader = new BufferedReader(new FileReader(file));
+            String line = ((BufferedReader) reader).readLine();
+
+            while (file.canRead()) {
+                while (line != null) {
+                    String[] properties = (line.split(","));
+
+                    book.add(new Profile(properties[0], properties[1], properties[2], properties[3]));
+
+                    // read next line
+                    line = ((BufferedReader) reader).readLine();
+                }
+            }
+            reader.close();
+        }
+
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

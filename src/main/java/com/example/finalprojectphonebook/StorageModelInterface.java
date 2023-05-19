@@ -13,4 +13,6 @@ public interface StorageModelInterface {
 
     // updates persistent storage
     void updateStorage() throws IOException;
+
+    void loadStorage() throws IOException;
 }
