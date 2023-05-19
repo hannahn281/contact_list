@@ -17,11 +17,11 @@ public class Profile {
     public String getPhone() {
         return phone;
     }
-    public String getpEmail() {
+    public String getPrimary() {
         return pEmail;
     }
 
-    public String getsEmail(){return sEmail;}
+    public String getSecondary(){return sEmail;}
     public Boolean getEntered(){
         return entered;
     }
@@ -29,10 +29,10 @@ public class Profile {
         this.name = name;
     }
 
-    public void setpEmail(String email) {
+    public void setPrimary(String email) {
         this.pEmail = email;
     }
-    public void setsEmail(String email){this.sEmail = email;}
+    public void setSecondary(String email){this.sEmail = email;}
 
     public void setPhone(String phone) {
         this.phone = phone;

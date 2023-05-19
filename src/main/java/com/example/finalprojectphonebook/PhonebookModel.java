@@ -9,15 +9,16 @@ public class PhonebookModel implements StorageModelInterface{
     List<Profile> book = new ArrayList<>();
 
     @Override
-    public Profile addModelEntry(String name, String phone, String primary, String secondary) {
+    public Profile addModelEntry(String name, String phone, String pEmail, String sEmail) {
         //adds new profile when validated
-        book.add(new Profile(name, phone, primary, secondary));
+        book.add(new Profile(name, phone, pEmail, sEmail));
         for(Profile profile: book){
             if(!profile.getEntered()){
                 profile.setEntered(true);
                 return profile;
             }
         }
+        System.out.println("its sad!!\n");
         return null;
     }
 
@@ -29,16 +30,16 @@ public class PhonebookModel implements StorageModelInterface{
     // edits entry
     @Override
     public void editModelEntry(String input, String newValue, int index){
-        if (Objects.equals(input, "name")){
+        if (input == "name"){
             book.get(index).setName(newValue);
         }
-        else if (Objects.equals(input, "phone")){
+        else if (input == "phone"){
             book.get(index).setPhone(newValue);
         }
-        else if(Objects.equals(input, "primary")){
-            book.get(index).setpEmail(newValue);
+        else if(input == "primary"){
+            book.get(index).setPrimary(newValue);
         }else{
-            book.get(index).setsEmail(newValue);
+            book.get(index).setSecondary(newValue);
         }
     }
 

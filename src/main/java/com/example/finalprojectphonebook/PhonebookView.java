@@ -32,7 +32,6 @@ public class PhonebookView extends Application implements TableViewerInterface{
     TableColumn<Profile, String> nameClm = new TableColumn<>("Name");
     TableColumn<Profile, String> phoneClm = new TableColumn<>("Phone Number");
     TableColumn<Profile, String> emailClm = new TableColumn<>("Email");
-
     TableColumn<Profile, String> primClm = new TableColumn<>("Primary");
     TableColumn<Profile, String> secClm = new TableColumn<>("Secondary");
 
@@ -108,15 +107,11 @@ public class PhonebookView extends Application implements TableViewerInterface{
 
         primClm.setCellValueFactory(new PropertyValueFactory<>("primary"));
         secClm.setCellValueFactory(new PropertyValueFactory<>("secondary"));
-
-        // creates editable email column
-        //emailClm.setCellValueFactory(new PropertyValueFactory<>("email"));
-        emailClm.getColumns().addAll(primClm, secClm);
         primClm.setCellFactory(TextFieldTableCell.forTableColumn());
         secClm.setCellFactory(TextFieldTableCell.forTableColumn());
-        //emailClm.setCellFactory(TextFieldTableCell.forTableColumn());
 
-
+        // creates editable email column
+        emailClm.getColumns().addAll(primClm, secClm);
 
         //adds columns to bookData table
         bookData.getColumns().addAll(nameClm, phoneClm, emailClm);
