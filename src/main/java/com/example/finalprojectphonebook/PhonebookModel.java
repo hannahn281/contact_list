@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -53,17 +54,22 @@ public class PhonebookModel implements StorageModelInterface{
     // updates persistent storage (idk how to do this btw)
     @Override
     public void updateStorage() throws IOException {
-        System.out.println("We made it bois");
-        File file = new File("ProfileData.txt");
+
+        // sets up directory and file
+        File dir = new File(".");
+        File file = new File(dir, "ProfileData.txt");
+
         file.setReadable(true); //read
         file.setWritable(true); //write
         file.setExecutable(true); //execute
 
-        BufferedWriter writer = new BufferedWriter(new FileWriter(file, false));
-        for(Profile profile: book){
-            writer.append("Hello!!");
-            writer.append(profile.getName() + "," + profile.getPhone() + "," + profile.getPrimary() + "," + profile.getSecondary() + "\n");
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, false))){
+            for (Profile profile : book) {
+                writer.write(profile.getName() + "," + profile.getPhone() + "," + profile.getPrimary() + "," + profile.getSecondary() + "\n");
+            }
+            writer.close();
         }
-        writer.close();
+        System.out.println("Contents of: "+ file.getAbsolutePath());
+        System.out.println(Files.readString(file.toPath()));
     }
 }
