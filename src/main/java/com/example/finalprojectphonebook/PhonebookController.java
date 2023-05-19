@@ -1,6 +1,9 @@
 package com.example.finalprojectphonebook;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Scanner;
 
 public class PhonebookController implements TableControllerInterface{
 
@@ -13,7 +16,7 @@ public class PhonebookController implements TableControllerInterface{
         this.view = view;
         this.model = model;
         view.setController(this);
-        model.loadStorage();
+        loadStorage();
     }
 
     @Override
@@ -25,7 +28,7 @@ public class PhonebookController implements TableControllerInterface{
         }
         // adds entry to view and model
         else {
-            view.addViewEntry(model.addModelEntry(name, phone, pEmail, sEmail));
+            view.addViewEntry(model.addModelEntry(name, phone, pEmail, sEmail, false));
             view.clearEntries();
         }
     }
@@ -51,4 +54,24 @@ public class PhonebookController implements TableControllerInterface{
         System.exit(0);
     }
 
+    public void loadStorage() throws IOException {
+        // finds up directory and file
+        File dir = new File("src/main/resources/com/example/finalprojectphonebook");
+        File file = new File(dir, "ProfileData.txt");
+
+        file.setReadable(true); //read
+        file.setExecutable(true); //execute
+
+        Scanner input = new Scanner(file);
+        input.useDelimiter(",|\n");
+
+        while(input.hasNext()) {
+            String name = input.next();
+            String phone = input.next();
+            String primary = input.next();
+            String secondary = input.next();
+
+            view.addViewEntry(model.addModelEntry(name, phone, primary, secondary, true));
+        }
+    }
 }

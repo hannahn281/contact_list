@@ -9,17 +9,21 @@ public class PhonebookModel implements StorageModelInterface{
     List<Profile> book = new ArrayList<>();
 
     @Override
-    public Profile addModelEntry(String name, String phone, String pEmail, String sEmail) throws IOException{
+    public Profile addModelEntry(String name, String phone, String pEmail, String sEmail, Boolean onLoad) throws IOException{
         //adds new profile when validated
         book.add(new Profile(name, phone, pEmail, sEmail));
         for(Profile profile: book){
             if(!profile.getEntered()){
                 profile.setEntered(true);
-                updateStorage();
+                if (onLoad == false) {
+                    updateStorage();
+                }
                 return profile;
             }
         }
-        updateStorage();
+        if (onLoad == false) {
+            updateStorage();
+        }
         return null;
     }
 
@@ -61,38 +65,8 @@ public class PhonebookModel implements StorageModelInterface{
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, false))){
             for (Profile profile : book) {
                 writer.write(profile.getName() + "," + profile.getPhone() + "," + profile.getPrimary() + "," + profile.getSecondary() + "\n");
-                writer.close();
             }
             writer.close();
-        }
-    }
-
-    public void loadStorage() throws IOException{
-        // finds up directory and file
-        File dir = new File("src/main/resources/com/example/finalprojectphonebook");
-        File file = new File(dir, "ProfileData.txt");
-        System.out.println("Contents of it: "+ file.getAbsolutePath());
-        System.out.println(Files.readString(file.toPath()));
-
-        file.setReadable(true); //read
-        file.setExecutable(true); //execute
-
-        Scanner input = new Scanner(file);
-        input.useDelimiter(",");
-
-        while(input.hasNext()) {
-            String name = input.next();
-            String phone = input.next();
-            String primary = input.next();
-            String secondary = input.next();
-
-            System.out.println(name);
-            System.out.println(phone);
-            System.out.println(primary);
-            System.out.println(secondary);
-            System.out.println("end");
-
-            addModelEntry(name, phone, primary, secondary);
         }
     }
 }
