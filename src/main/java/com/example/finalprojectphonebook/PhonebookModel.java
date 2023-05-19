@@ -2,10 +2,7 @@ package com.example.finalprojectphonebook;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class PhonebookModel implements StorageModelInterface{
     //stores inputted data as Profile
@@ -64,42 +61,38 @@ public class PhonebookModel implements StorageModelInterface{
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, false))){
             for (Profile profile : book) {
                 writer.write(profile.getName() + "," + profile.getPhone() + "," + profile.getPrimary() + "," + profile.getSecondary() + "\n");
+                writer.close();
             }
             writer.close();
         }
-        System.out.println("Contents of: "+ file.getAbsolutePath());
-        System.out.println(Files.readString(file.toPath()));
     }
 
     public void loadStorage() throws IOException{
         // finds up directory and file
         File dir = new File("src/main/resources/com/example/finalprojectphonebook");
         File file = new File(dir, "ProfileData.txt");
-        System.out.println("Contents of woohoo: "+ file.getAbsolutePath());
+        System.out.println("Contents of it: "+ file.getAbsolutePath());
         System.out.println(Files.readString(file.toPath()));
 
         file.setReadable(true); //read
         file.setExecutable(true); //execute
 
-        try {
-            Reader reader = new BufferedReader(new FileReader(file));
-            String line = ((BufferedReader) reader).readLine();
+        Scanner input = new Scanner(file);
+        input.useDelimiter(",");
 
-            while (file.canRead()) {
-                while (line != null) {
-                    String[] properties = (line.split(","));
+        while(input.hasNext()) {
+            String name = input.next();
+            String phone = input.next();
+            String primary = input.next();
+            String secondary = input.next();
 
-                    book.add(new Profile(properties[0], properties[1], properties[2], properties[3]));
+            System.out.println(name);
+            System.out.println(phone);
+            System.out.println(primary);
+            System.out.println(secondary);
+            System.out.println("end");
 
-                    // read next line
-                    line = ((BufferedReader) reader).readLine();
-                }
-            }
-            reader.close();
-        }
-
-        catch (IOException e) {
-            throw new RuntimeException(e);
+            addModelEntry(name, phone, primary, secondary);
         }
     }
 }
