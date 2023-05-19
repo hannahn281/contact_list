@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.media.AudioClip;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class PhonebookView extends Application implements TableViewerInterface{
@@ -134,14 +135,22 @@ public class PhonebookView extends Application implements TableViewerInterface{
 
         // adding action events to the add button
         add.setOnAction((actionEvent -> {
-            controller.entryAdded(inName.getText(), inPhone.getText(), inpEmail.getText(), insEmail.getText());
+            try {
+                controller.entryAdded(inName.getText(), inPhone.getText(), inpEmail.getText(), insEmail.getText());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             addSound.play(1.0);
         }));
 
         // adding action events to the delete button
         // adding action events to the delete button
         delete.setOnAction((actionEvent -> {
-            controller.entryDeleted();
+            try {
+                controller.entryDeleted();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             deleteSound.play(1.0);
         }));
 
@@ -150,12 +159,20 @@ public class PhonebookView extends Application implements TableViewerInterface{
 
         nameClm.setOnEditCommit(event -> {
             String newValue = event.getNewValue();
-            controller.entryEdited("name", newValue);
+            try {
+                controller.entryEdited("name", newValue);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
 
         phoneClm.setOnEditCommit(event -> {
             String newValue = event.getNewValue();
-            controller.entryEdited("phone", newValue);
+            try {
+                controller.entryEdited("phone", newValue);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
         /*
         emailClm.setOnEditCommit(event -> {
@@ -166,12 +183,20 @@ public class PhonebookView extends Application implements TableViewerInterface{
 
         primClm.setOnEditCommit(event ->{
             String newValue = event.getNewValue();
-            controller.entryEdited("primary", newValue);
+            try {
+                controller.entryEdited("primary", newValue);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
 
         secClm.setOnEditCommit(event ->{
             String newValue = event.getNewValue();
-            controller.entryEdited("secondary", newValue);
+            try {
+                controller.entryEdited("secondary", newValue);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
 
         // adding style elements!!
