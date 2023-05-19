@@ -56,7 +56,7 @@ public class PhonebookModel implements StorageModelInterface{
     public void updateStorage() throws IOException {
 
         // sets up directory and file
-        File dir = new File(".");
+        File dir = new File("src/main/resources/com/example/finalprojectphonebook");
         File file = new File(dir, "ProfileData.txt");
 
         file.setReadable(true); //read
