@@ -1,5 +1,8 @@
 package com.example.finalprojectphonebook;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -45,8 +48,11 @@ public class PhonebookModel implements StorageModelInterface{
 
     // updates persistent storage (idk how to do this btw)
     @Override
-    public void updateStorage() {
-        //in = new FileInputStream("input.txt");
-        //out = new FileOutputStream("output.txt");
+    public void updateStorage() throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter("ProfileData.txt"));
+        for(Profile profile: book){
+            writer.write(profile.getName() + "," + profile.getPhone() + "," + profile.getPrimary() + "," + profile.getSecondary() + "\n");
+            writer.close();
+        }
     }
 }

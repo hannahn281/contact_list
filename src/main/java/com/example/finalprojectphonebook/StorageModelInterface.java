@@ -1,5 +1,7 @@
 package com.example.finalprojectphonebook;
 
+import java.io.IOException;
+
 public interface StorageModelInterface {
     // adds entry
     Profile addModelEntry(String entry1, String entry2, String entry3, String entry4);
@@ -10,5 +12,5 @@ public interface StorageModelInterface {
     void editModelEntry(String input, String newValue, int index);
 
     // updates persistent storage
-    void updateStorage();
+    void updateStorage() throws IOException;
 }
